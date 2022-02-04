@@ -12,7 +12,6 @@ export const enterText = (rawText) => {
 };
 
 export const showHelp = () => {
-    console.log("sadas");
   return {
     type: TOGGLE_HELP,
   };
