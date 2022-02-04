@@ -1,31 +1,23 @@
-import { useState } from "react";
 import "./App.scss";
 import { useSelector, useDispatch} from "react-redux"
-import {marked} from "react-marked";
+import {marked} from 'marked'
 import { enterText, showHelp } from "./redux/markdownReducer";
 
 function App() {
 
   const a = useSelector((state) => state)
   const textCurrent = useSelector((state) => state.counter.textCurrent)
-  const textUser = useSelector((state) => state.counter.textUser)
-  const textHelp = useSelector((state) => state.counter.textHelp)
   const isShowingHelp = useSelector((state) => state.counter.isShowingHelp)
 
   const dispatch = useDispatch()
 
   console.log(a);
   console.log(textCurrent);
-  // const parsedText = marked(textCurrent);
-  // const processedText = { __html: parsedText };
-  
+  const parsedText = marked.parse(textCurrent);
 
-  // const getTextHelp = () => {
-  //   return textHelp
-  // }
 
   function createMarkup() {
-    return {__html: textCurrent};
+    return {__html: parsedText};
   }
   
   return (
