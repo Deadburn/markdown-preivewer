@@ -12,13 +12,19 @@ function App() {
 
   console.log(a);
 
+  const getTextHelp = () => {
+    console.log(textHelp);
+    return textHelp
+  }
   
   return (
     <div>
       <div className="main-content">
         <header>
           <h1 className="app-title">Markdown Previewer</h1>
-          <div className="help-button">
+          <div 
+            onClick={() => getTextHelp()}
+            className={`help-button ${isShowingHelp && 'active'}`}>
             <i className="fa fa-question" aria-hidden="true"></i>
           </div>
         </header>
