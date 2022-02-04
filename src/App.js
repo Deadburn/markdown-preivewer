@@ -1,20 +1,31 @@
 import { useState } from "react";
 import "./App.scss";
 import { useSelector, useDispatch} from "react-redux"
+import {marked} from "react-marked";
+import { enterText, showHelp } from "./redux/markdownReducer";
 
 function App() {
-  const [enterText, setEnterText] = useState("");
+
   const a = useSelector((state) => state)
   const textCurrent = useSelector((state) => state.counter.textCurrent)
   const textUser = useSelector((state) => state.counter.textUser)
   const textHelp = useSelector((state) => state.counter.textHelp)
   const isShowingHelp = useSelector((state) => state.counter.isShowingHelp)
 
-  console.log(a);
+  const dispatch = useDispatch()
 
-  const getTextHelp = () => {
-    console.log(textHelp);
-    return textHelp
+  console.log(a);
+  console.log(textCurrent);
+  // const parsedText = marked(textCurrent);
+  // const processedText = { __html: parsedText };
+  
+
+  // const getTextHelp = () => {
+  //   return textHelp
+  // }
+
+  function createMarkup() {
+    return {__html: textCurrent};
   }
   
   return (
@@ -23,7 +34,9 @@ function App() {
         <header>
           <h1 className="app-title">Markdown Previewer</h1>
           <div 
-            onClick={() => getTextHelp()}
+            onClick={() => {
+              dispatch(showHelp())
+            }}
             className={`help-button ${isShowingHelp && 'active'}`}>
             <i className="fa fa-question" aria-hidden="true"></i>
           </div>
@@ -31,12 +44,12 @@ function App() {
 
         <div className="text-panels">
           <textarea
-            value="textCurrent"
-            onChange={(e) => setEnterText(e.target.value)}
+            value={textCurrent}
+            onChange={(e) => dispatch(enterText(e.target.value))}
             className="text-panel-left"
-            readOnly={true}
+            // readOnly={isShowingHelp}
           ></textarea>
-          <div ></div>
+          <div dangerouslySetInnerHTML={createMarkup()} />
         </div>
 
         <footer>
